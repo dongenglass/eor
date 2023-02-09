@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Client Tracker</title>
+  </head>
+  <body>
+    <h1>Client Tracker</h1>
+
+    <!-- Form to add a new client -->
+    <form action="add_client.php" method="post">
+      <h2>Add New Client:</h2>
+      <input type="text" name="name" placeholder="Name">
+      <input type="text" name="email" placeholder="Email">
+      <input type="text" name="phone" placeholder="Phone">
+      <input type="submit" value="Add Client">
+    </form>
+
+    <!-- Table to display all clients -->
+    <h2>Clients:</h2>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+      </tr>
+      <?php
+        // Connect to the database
+        $servername = "localhost";
+        $username = "username";
+        $password = "password";
+        $dbname = "clients";
+        $conn = mysqli_connect($servername, $username, $password, $dbname);
+
+        // Get the clients from the database
+        $sql = "SELECT * FROM clients";
+        $result = mysqli_query($conn, $sql);
+        while ($row = mysqli_fetch_array($result)) {
+          echo "<tr>";
+          echo "<td>" . $row['name'] . "</td>";
+          echo "<td>" . $row['email'] . "</td>";
+          echo "<td>" . $row['phone'] . "</td>";
+          echo "</tr>";
+        }
+
+        // Close the connection
+        mysqli_close($conn);
+      ?>
+    </table>
+  </body>
+</html>
